@@ -30,13 +30,17 @@
 #include <math.h>
 #include <ctype.h>
 
-#include "config.h"
+// #include "config.h"
 
 #include "lock.bitmap"
 #include "mask.bitmap"
 
 //#define DEBUGPRN
 #include "dbg.h"
+
+#ifndef DEFAULT_PAM_MODULE
+#define DEFAULT_PAM_MODULE "system-local-login"
+#endif
 
 #define TIMEOUTPERATTEMPT 30000
 #define MAXGOODWILL  (TIMEOUTPERATTEMPT*5)
@@ -61,7 +65,7 @@ int screen;
 Colormap cmap;
 
 int bg_action = MBG;
-char *pam_module = "system-local-login";
+char *pam_module = DEFAULT_PAM_MODULE;
 
 int auth_pam(char *user, char *password, char *module);
 
@@ -334,7 +338,7 @@ help()
     printf("Usage: %s [options...]\n", PROJECT_NAME);
     printf("Options:\n");
     printf(" -h      This help message\n");
-    printf(" -p MOD  PAM module, default is system-local-login\n");
+    printf(" -p MOD  PAM module, default is " DEFAULT_PAM_MODULE "\n");
     printf(" -b BG   background action, none, blank or bg, default is bg\n");
 }
 
